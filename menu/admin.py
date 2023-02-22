@@ -9,4 +9,5 @@ class MenuItemInline(admin.TabularInline):
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug',)
+    list_display = ('title','parent', 'slug',)
+    prepopulated_fields = {'slug': ('title',)}
