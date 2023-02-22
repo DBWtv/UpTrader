@@ -7,7 +7,7 @@ class MainMenu(models.Model):
         'Название меню',
         max_length=50,
     )
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     class Meta:
         verbose_name = 'Основное меню'
@@ -33,7 +33,7 @@ class SecondMenu(models.Model):
         on_delete=models.CASCADE,
         related_name='second_menu',
     )
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     class Meta:
         verbose_name = 'Меню второго уровня'
@@ -59,7 +59,7 @@ class LastMenu(models.Model):
         on_delete=models.CASCADE,
         related_name='last_menu',
     )
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     class Meta:
         verbose_name = 'Последнее меню'
