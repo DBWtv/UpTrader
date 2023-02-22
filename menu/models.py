@@ -7,6 +7,7 @@ class MainMenu(models.Model):
         'Название меню',
         max_length=50,
     )
+    slug = models.SlugField()
 
     class Meta:
         verbose_name = 'Основное меню'
@@ -14,6 +15,12 @@ class MainMenu(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse(
+            "main_menu_url",
+            kwargs={"url": f'{self.slug}'},
+        )
 
 
 class SecondMenu(models.Model):
@@ -24,7 +31,9 @@ class SecondMenu(models.Model):
     parent = models.ForeignKey(
         MainMenu,
         on_delete=models.CASCADE,
+        related_name='second_menu',
     )
+    slug = models.SlugField()
 
     class Meta:
         verbose_name = 'Меню второго уровня'
@@ -32,6 +41,12 @@ class SecondMenu(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse(
+            "second_menu_url",
+            kwargs={"url": f'{self.slug}'},
+        )
 
 
 class LastMenu(models.Model):
@@ -42,7 +57,9 @@ class LastMenu(models.Model):
     parent = models.ForeignKey(
         SecondMenu,
         on_delete=models.CASCADE,
+        related_name='last_menu',
     )
+    slug = models.SlugField()
 
     class Meta:
         verbose_name = 'Последнее меню'
@@ -50,3 +67,9 @@ class LastMenu(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse(
+            "last_menu_url",
+            kwargs={"url": f'{self.slug}'},
+        )

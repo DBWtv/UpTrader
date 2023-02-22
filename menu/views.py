@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from .models import MainMenu, LastMenu, SecondMenu
 
-# Create your views here.
+def start_page(request):
+    return render(request, 'menu.html')
