@@ -1,9 +1,18 @@
-{% extends 'base.html' %}
-{% load draw_menu %}
-{% block content %}
-    <div>
-        {% for x in obj %}
-            {% draw_menu x %} <br>
-        {% endfor %}
-    </div>
-{% endblock content %}
+{% load menu_tag %}
+{% draw_menu menu_name as menu_items %}
+{% for item in menu_items %}
+    <li {% if item.get_absolute_url == request.path %}class="active"{% endif %}>
+        {% if item.children.exists %}
+            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+            <ul>
+                {% for child in item.children.all %}
+                    <li {% if child.get_absolute_url == request.path %}class="active"{% endif %}>
+                        <a href="{{ child.get_absolute_url }}">{{ child.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+        {% endif %}
+    </li>
+{% endfor %}

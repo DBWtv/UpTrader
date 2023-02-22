@@ -1,4 +1,12 @@
 from django.contrib import admin
-from .models import MainMenu, SecondMenu, LastMenu
+from menu.models import MenuItem
 
-admin.site.register([MainMenu, SecondMenu, LastMenu])
+
+class MenuItemInline(admin.TabularInline):
+    model = MenuItem
+    extra = 1
+
+
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug',)
